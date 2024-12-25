@@ -28,17 +28,18 @@ CREATE TABLE Region (
 
 CREATE TABLE Weather (
     wno NUMBER(4) CONSTRAINT Weather_wno_PK PRIMARY KEY,
-    highws NUMBER(3,1) CONSTRAINT Weather_highws_CHK CHECK (highws >= 0),
+    highws NUMBER(3) CONSTRAINT Weather_highws_CHK CHECK (highws >= 0),
     tysize NUMBER(4) CONSTRAINT Weather_tysize_CHK CHECK (tysize >= 0),
     rainfall NUMBER(4) CONSTRAINT Weather_rainfall_CHK CHECK (rainfall >= 0),
     lowap NUMBER(4) CONSTRAINT Weather_lowap_CHK CHECK (lowap >= 0),
-    latitude NUMBER(6,3) 
+    latitude NUMBER(4,1) 
         CONSTRAINT Weather_latitude_CHK CHECK (latitude BETWEEN -90 AND 90),
-    longitude NUMBER(6,3) 
+    longitude NUMBER(4,1) 
         CONSTRAINT Weather_longitude_CHK CHECK (longitude BETWEEN -180 AND 180),
     section VARCHAR2(20),
     tyno NUMBER(10) CONSTRAINT Weather_tyno_FK REFERENCES Typhoon(tyno) ON DELETE CASCADE
 );
+drop table Weather;
 
 CREATE TABLE Typhoon_Rating_System (
     rno NUMBER(2) CONSTRAINT TRS_rno_PK PRIMARY KEY,
@@ -48,4 +49,15 @@ CREATE TABLE Typhoon_Rating_System (
     CONSTRAINT TRS_std_range_CHK CHECK (minstd <= maxstd)
 );
 
-
+create sequence impact_impno_seq
+                start with 1
+                INCREMENT by 1;
+create sequence region_regno_seq
+                start with 1
+                INCREMENT by 1; 
+create sequence weather_wno_seq
+                start with 1
+                INCREMENT by 1;
+create sequence trs_rno_seq
+                start with 10
+                INCREMENT by 10;
